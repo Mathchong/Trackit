@@ -1,35 +1,67 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import Loader from 'react-loader-spinner';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import TokenContext from './../contexts/TokenContext'
+import ImageContext from './../contexts/ImageContext'
 
 import BigLogo from "./../Assests/BigLogo.svg"
 
 
-export default function LoginPage(){
-    const [loginInfo, setLoginInfo] = useState({email: '', password: ''})
+export default function LoginPage() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [conectando, setConectando] = useState(false);
+    const [mostrarNoBotao, setMostrarNoBotao] = useState("Entrar");
+    const {token, setToken} = useContext(TokenContext);
+    const {image, setImage } = useContext(ImageContext);
 
-    function doLogin(){
-        console.log(loginInfo)
+    useEffect(() => {
+        if (conectando) {
+            setMostrarNoBotao(<Loader type="ThreeDots" color="#FFFFFF" height={20} width={80} />)
+        } else setMostrarNoBotao('Entrar')
+
+    }, [conectando])
+
+    function doLogin(event) {
+        event.preventDefault();
+        setConectando(true)
+
+        const body = { email: email, password: password }
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body)
+
+        promise.then((response) => {
+            console.log(response)
+            console.log(response.data)
+            setConectando(false)
+            setImage(response.data.image)
+            setToken(response.data.token)
+        })
+
     }
 
-    return(
+    return (
         <LoginContainer>
             <img src={BigLogo} alt="Trackit Logo" />
-            <form onSubmit={() => doLogin}>
-                <input 
-                type="text" 
-                placeholder=" email" 
-                onChange={(e) => setLoginInfo(loginInfo.email = e.target.value)}
-                value={loginInfo.email}
+            <form onSubmit={doLogin}>
+                <input
+                    required
+                    type="text"
+                    disabled={conectando}
+                    placeholder=" email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
                 />
-                <input 
-                type="password" 
-                placeholder=" password" 
-                onChange={(e) => setLoginInfo(loginInfo.password = e.target.value)}
-                value={loginInfo.password}
+                <input
+                    required
+                    type="password"
+                    disabled={conectando}
+                    placeholder=" senha"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
                 />
-                <button type="submit">Entrar</button>
+                <button disabled={conectando} type="submit">{mostrarNoBotao}</button>
             </form>
             <Link className="toRegister" to="/cadastro" >Não tem uma conta? Cadastre-se!</Link>
         </LoginContainer>
@@ -69,6 +101,7 @@ const LoginContainer = styled.div`
         height: 45px;
         border: 1px solid #D4D4D4;
         border-radius: 5px;
+        font-size: 20px;
     }
 
     input::placeholder{
@@ -87,6 +120,7 @@ const LoginContainer = styled.div`
         height: 45px;
         border: none;
         font-size: 21px;
+        opacity: ${props => props.disabled ? 0.2 : 1};
     }
 
     .toRegister{
