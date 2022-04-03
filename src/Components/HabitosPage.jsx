@@ -14,6 +14,8 @@ export default function HabitosPage() {
     const [disabled, setDisabled] = useState(false)
     const [habitList, setHabitList] = useState([-1])
 
+    let habits = ''
+
     useEffect(() => {
         const config = {
             headers: {
@@ -27,11 +29,16 @@ export default function HabitosPage() {
             console.log(response.data)
             setHabitList([...response.data])
             console.log(habitList)
+            setReload(!reload)
         }
         )
     }, [])
 
     useEffect(() => { }, [reload])
+
+    useEffect(()=>{
+        habits = habitLoader()
+    },[habitList])
 
     function createHabit(){
         setDisabled(true)
@@ -66,7 +73,7 @@ export default function HabitosPage() {
         if (habitList[0] === -1) return <></>
         if (habitList.lenght === 0) return <div>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</div>
         return habitList.map((habit) =>{
-            return <HabitStats name={habit.name} days={habit.days} id={habit.id} />
+            return <HabitStats key={habit.id} callback={()=> setReload(!reload)} name={habit.name} days={habit.days} id={habit.id} />
         } )
     }
 
