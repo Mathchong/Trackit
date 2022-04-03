@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import TokenContext from './../contexts/TokenContext'
 import HabitCreator from './HabitCreator'
+import HabitStats from "./HabitStats";
 
 export default function HabitosPage() {
     const { token, setToken } = useContext(TokenContext);
@@ -11,7 +12,8 @@ export default function HabitosPage() {
     const [days, setDays] = useState(new Map())
     const [reload, setReload] = useState(true)
     const [disabled, setDisabled] = useState(false)
-    const dias = new Map();
+    const [habitList, setHabitList] = useState([-1])
+
     useEffect(() => {
         const config = {
             headers: {
@@ -23,10 +25,12 @@ export default function HabitosPage() {
         promise.then((response) => {
             console.log(response)
             console.log(response.data)
+            setHabitList([...response.data])
+            console.log(habitList)
         }
         )
-
     }, [])
+
     useEffect(() => { }, [reload])
 
     function createHabit(){
@@ -46,12 +50,24 @@ export default function HabitosPage() {
             console.log(response)
             console.log(response.data)
             alert('habito criado com sucesso')
+            setDisabled(false)
+            setDays(new Map())
+            setName("")
+            setCreating(false)
         })
         promise.catch((error)=>{
             console.log(error)
             console.log(error.data)
             alert('putz, deu xabu')
         })
+    }
+
+    function habitLoader(){
+        if (habitList[0] === -1) return <></>
+        if (habitList.lenght === 0) return <div>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</div>
+        return habitList.map((habit) =>{
+            return <HabitStats name={habit.name} days={habit.days} id={habit.id} />
+        } )
     }
 
     return (
@@ -131,6 +147,7 @@ export default function HabitosPage() {
                     <button disabled={disabled} onClick={() => createHabit()} className="save">Salvar</button>
                 </div>
             </CreatorBox> : <></>}
+            {habitLoader()}
         </Habitos>
     )
 }
@@ -180,6 +197,7 @@ const CreatorBox = styled.article`
     height: 180px;
     background-color: #FFFFFF;
     border-radius: 5px;
+    margin-bottom: 10px;
 
     input{
         width: calc(100% - 36px);
@@ -188,6 +206,10 @@ const CreatorBox = styled.article`
         border: 1px solid #D4D4D4;
         border-radius: 5px;
         font-size: 18px;
+        font-family: Lexend Deca;
+        font-size: 20px;
+        font-weight: 400;
+        color: #666666;
     }
 
     input::placeholder{
