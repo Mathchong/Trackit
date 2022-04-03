@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import Loader from 'react-loader-spinner';
 import axios from 'axios';
@@ -16,6 +16,7 @@ export default function LoginPage() {
     const [mostrarNoBotao, setMostrarNoBotao] = useState("Entrar");
     const {token, setToken} = useContext(TokenContext);
     const {image, setImage } = useContext(ImageContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (conectando) {
@@ -37,6 +38,7 @@ export default function LoginPage() {
             setConectando(false)
             setImage(response.data.image)
             setToken(response.data.token)
+            navigate('/habitos')
         })
 
     }
