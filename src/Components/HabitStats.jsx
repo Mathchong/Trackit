@@ -45,7 +45,7 @@ export default function HabitStats(props) {
 
 
 const HabitBox = styled.article`
-    height: 91px;
+    min-height: 91px;
     width: 340px;
     border-radius: 5px;
     background-color: #FFFFFF;
@@ -65,7 +65,7 @@ const HabitBox = styled.article`
         width: 30px;
         border-radius: 5px;
         border: 1px solid #D4D4D4;
-        margin: 0px 4px 15px 0px;
+        margin: 0px 4px 0px 0px;
         font-family: Lexend Deca;
         font-size: 20px;
         font-weight: 400;

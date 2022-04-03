@@ -12,18 +12,15 @@ export default function CadastroPage(){
     const [name,setName] = useState('')
     const [image,setImage] = useState('')
     const [conectando, setConectando] = useState(false);
+    const [reload, setReload] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {},[reload])
 
     function doLogin(event){
         event.preventDefault();
         setConectando(true);
-        const emailPost = email.toString();
-        console.log(emailPost,email)
         const body = {email : email, name : name, password : password, image : image}
-
-        //testechong@gmail.
-        //teste
-        //chong
 
         const promise = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
@@ -37,17 +34,17 @@ export default function CadastroPage(){
             setImage('')
             setConectando(false)
             navigate('/')
-        
         })
 
         promise.catch((error) => {
-            console.error(error.data)
             setConectando(!conectando);
             setEmail('')
             setPassword('')
             setName('')
             setImage('')
+            setConectando(false)
             alert('Putz, deu xabu');
+            navigate('/cadastro')
         })
     }
 

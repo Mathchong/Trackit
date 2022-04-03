@@ -6,13 +6,14 @@ import 'react-circular-progressbar/dist/styles.css';
 
 export default function footer() {
     const percentage = 66;
+
     return (
         <FooterTrack>
             <h1><Link className="link" to={'/habitos'}>Hábitos</Link></h1>
             <div className="progressbar-container">
                 <CircularProgressbar 
                 value={percentage} 
-                text={`${percentage}%`} 
+                text={<Link className="hoje" to={'/hoje'}>Hoje</Link>} 
                 background
                 backgroundPadding={6}
                 styles={buildStyles({
@@ -75,5 +76,12 @@ const FooterTrack = styled.footer`
     h1:last-of-type{
         position: fixed;
         right: calc((50vw - 78.15px)/2)
+    }
+
+    .hoje{
+        font-family: Lexend Deca;
+        font-size: 18px;
+        font-weight: 400;
+        color: #FFF;
     }
 `

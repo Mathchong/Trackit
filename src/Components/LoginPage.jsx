@@ -38,7 +38,7 @@ export default function LoginPage() {
             setConectando(false)
             setImage(response.data.image)
             setToken(response.data.token)
-            navigate('/habitos')
+            navigate('/hoje')
         })
 
     }
