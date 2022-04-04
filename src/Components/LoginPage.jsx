@@ -22,8 +22,6 @@ export default function LoginPage() {
     const {active, setActive} = useContext(ActivateContext)
     setActive(false)
 
-    
-
     useEffect(() => {
         if (conectando) {
             setMostrarNoBotao(<Loader type="ThreeDots" color="#FFFFFF" height={20} width={80} />)
@@ -45,6 +43,14 @@ export default function LoginPage() {
             setImage(response.data.image)
             setToken(response.data.token)
             navigate('/hoje')
+        })
+
+        promise.catch((error) => {
+            console.log(error)
+            setPassword('')
+            setEmail('')
+            setConectando(false)
+            alert('Entre novamente com seu e-mail e senha')
         })
 
     }

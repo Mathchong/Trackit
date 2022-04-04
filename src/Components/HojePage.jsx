@@ -84,7 +84,7 @@ export default function HojePage() {
 const HabitsToday = styled.main`
     background-color: #E5E5E5;
     min-height: calc(100vh - 70px);
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
