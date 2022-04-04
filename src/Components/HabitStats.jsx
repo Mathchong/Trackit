@@ -11,8 +11,6 @@ export default function HabitStats(props) {
     console.log(days)
 
     function deleteHabit() {
-        let respostaUser = confirm('Deseja Deletar o Habito?')
-        if(!respostaUser) return;
         const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`
         const config = {
             headers: {

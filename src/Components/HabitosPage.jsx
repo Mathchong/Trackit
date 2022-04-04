@@ -69,6 +69,8 @@ export default function HabitosPage() {
         promise.catch((error)=>{
             console.log(error)
             console.log(error.data)
+            setDisabled(false)
+            setCreating(false)
             alert('putz, deu xabu')
         })
     }
@@ -160,6 +162,7 @@ export default function HabitosPage() {
                 </div>
             </CreatorBox> : <></>}
             {habitLoader()}
+            <div className="space"></div>
         </Habitos>
     )
 }
@@ -171,6 +174,7 @@ const Habitos = styled.main`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 70px;
 
     .meusHabitos{
         display: flex;
@@ -202,6 +206,11 @@ const Habitos = styled.main`
         margin-right: 18px;
         font-size: 27px;
         text-align: center;
+    }
+
+    .space{
+        height: 1px;
+        margin-bottom: 70px;
     }
 
 

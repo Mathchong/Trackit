@@ -26,6 +26,7 @@ const HeaderTrack = styled.header`
     align-items: center;
     justify-content: space-between;
     box-shadow: 0px 4px 4px 0px #00000026;
+    z-index: 1;
 
 
     h1{

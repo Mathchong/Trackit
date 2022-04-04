@@ -46,7 +46,7 @@ const FooterTrack = styled.footer`
     right: 0;
     height: 70px;
     background-color: #FFF;
-
+    z-index: 1;
     .progressbar-container{
         height: 91px;
         width: 91px;

@@ -73,9 +73,10 @@ export default function HojePage() {
         <HabitsToday>
             <div className="day">
                 <h1>{weekday}{date}</h1>
-                <h2>Nenhum hábito concluído ainda</h2>
+                <h2 className={percentage === 0 ? '' : 'verde'} >{percentage === 0 ? "Nenhum hábito concluído ainda" : `${percentage*100}% dos habitos concluidos` }</h2>
             </div>
             {percentageMarked()}
+            <div className="space"></div>
         </HabitsToday>
     )
 }
@@ -108,5 +109,13 @@ const HabitsToday = styled.main`
         font-weight: 400;
         color: #BABABA;
         margin-bottom: 28px;
+    }
+
+    .verde{
+        color: #8FC549;
+    }
+
+    .space{
+        margin-bottom: 100px;
     }
 `
