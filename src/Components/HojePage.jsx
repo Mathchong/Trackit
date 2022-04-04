@@ -25,6 +25,8 @@ export default function HojePage() {
         const promise = axios.get(url, config)
         promise.then((response) => {
             setTodayHabits([...response.data])
+            console.log(response.data)
+            console.log(todayHabits)
         })
     }, []
     )

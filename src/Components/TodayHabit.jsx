@@ -1,15 +1,56 @@
 import styled from 'styled-components';
 import check from './../Assests/check.svg'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+
+import TokenContext from './../contexts/TokenContext'
 
 export default function TodayHabit(props) {
-    const {id, name, done, currentSequence, highestSequence} = props;
+    const { id, name, done, currentSequence, highestSequence } = props;
+    const {token , setToken} = useContext(TokenContext)
+    const navigate = useNavigate();
+
+    function markHabit() {
+        const checkUrl = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`
+        const uncheckUrl = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`
+        const config = {
+            headers:{
+                Authorization: `Bearer ${token}`
+            },
+        };
+
+        if(done){
+            console.log("vou desmarcar")
+            const promise = axios.post(uncheckUrl,null,config)
+            promise.then((response) => {
+                console.log(response.data)
+
+            })
+
+            promise.catch((error) => {
+                console.log(error)
+            })
+        }else{
+            console.log("vou marcar")
+            const promise = axios.post(checkUrl,null,config)
+            promise.then((response) => {
+                console.log(response.data)
+                navigate('/hoje')
+            })
+            promise.catch((error) => {
+                console.log(error.message)
+            })
+        }
+    }
+
     return (
         <TodayHabitCheck>
             <div>
                 <h1>{name}</h1>
-                <h3>Sequencia atual: {currentSequence} dias</h3>
-                <h3>Seu recorde: {highestSequence} dias</h3>
-                <button>
+                <h3 className={done ? 'done' : ''}>Sequencia atual: <span>{currentSequence} dias</span></h3>
+                <h3 className={done && (currentSequence === highestSequence) ? 'done' : ''}>Seu recorde: <span>{highestSequence} dias</span></h3>
+                <button onClick={() => markHabit()} className={done ? 'done' : ""}>
                     <img src={check} alt="a check simbol" />
                 </button>
             </div>
@@ -48,6 +89,10 @@ const TodayHabitCheck = styled.article`
         margin-bottom: 12px;
     }
 
+    h3.done span{
+        color: #8FC549;
+    }
+
     button{
         height: 69px;
         width: 69px;
@@ -56,5 +101,9 @@ const TodayHabitCheck = styled.article`
         right: 13px;
         top: 13px;
         border: none
+    }
+
+    button.done{
+        background-color: #8FC549;
     }
 `
