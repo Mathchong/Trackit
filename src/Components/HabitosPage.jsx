@@ -13,6 +13,7 @@ export default function HabitosPage() {
     const [reload, setReload] = useState(true)
     const [disabled, setDisabled] = useState(false)
     const [habitList, setHabitList] = useState([-1])
+    const [reload2, setReload2] = useState([false])
 
     let habits = ''
 
@@ -30,14 +31,16 @@ export default function HabitosPage() {
             setHabitList([...response.data])
             console.log(habitList)
             setReload(!reload)
+            
         }
         )
-    }, [])
+    }, [reload2])
 
-    useEffect(() => { }, [reload])
+    // useEffect(() => { }, [reload])
 
     useEffect(()=>{
         habits = habitLoader()
+        console.log(habits)
     },[habitList])
 
     function createHabit(){
@@ -61,6 +64,7 @@ export default function HabitosPage() {
             setDays(new Map())
             setName("")
             setCreating(false)
+            setReload2([!reload2])
         })
         promise.catch((error)=>{
             console.log(error)
@@ -70,10 +74,11 @@ export default function HabitosPage() {
     }
 
     function habitLoader(){
+        console.log(habitList)
+        if (habitList.lenght === 0) return <div className="nada">Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</div>
         if (habitList[0] === -1) return <></>
-        if (habitList.lenght === 0) return <div>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</div>
         return habitList.map((habit) =>{
-            return <HabitStats key={habit.id} callback={()=> setReload(!reload)} name={habit.name} days={habit.days} id={habit.id} />
+            return <HabitStats key={habit.id} callback={()=> setReload2([!reload2])} name={habit.name} days={habit.days} id={habit.id} />
         } )
     }
 
@@ -198,6 +203,8 @@ const Habitos = styled.main`
         font-size: 27px;
         text-align: center;
     }
+
+
 `
 const CreatorBox = styled.article`
     width: 340px;

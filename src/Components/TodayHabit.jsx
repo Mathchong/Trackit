@@ -7,11 +7,14 @@ import { useContext, useEffect, useState } from 'react';
 import TokenContext from './../contexts/TokenContext'
 
 export default function TodayHabit(props) {
-    const { id, name, done, currentSequence, highestSequence } = props;
-    const {token , setToken} = useContext(TokenContext)
+    const { id, name, done, currentSequence, highestSequence, callback } = props;
+    const { token , setToken} = useContext(TokenContext)
     const navigate = useNavigate();
+    let block = false
 
     function markHabit() {
+        if(block) return;
+        block = true;
         const checkUrl = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`
         const uncheckUrl = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`
         const config = {
@@ -25,6 +28,8 @@ export default function TodayHabit(props) {
             const promise = axios.post(uncheckUrl,null,config)
             promise.then((response) => {
                 console.log(response.data)
+                callback()
+                navigate('/hoje')
 
             })
 
@@ -36,6 +41,8 @@ export default function TodayHabit(props) {
             const promise = axios.post(checkUrl,null,config)
             promise.then((response) => {
                 console.log(response.data)
+                console.log('deu certo')
+                callback()
                 navigate('/hoje')
             })
             promise.catch((error) => {

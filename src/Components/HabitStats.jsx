@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import bin from './../Assests/bin.svg'
 import axios from 'axios';
@@ -6,25 +6,27 @@ import axios from 'axios';
 import TokenContext from './../contexts/TokenContext'
 
 export default function HabitStats(props) {
-    const {token, setToken} = useContext(TokenContext)
-    const { name, days, id} = props;
+    const { token, setToken } = useContext(TokenContext)
+    const { name, days, id, callback } = props;
     console.log(days)
 
-    function deleteHabit(){
-       const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}` 
-       const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
+    function deleteHabit() {
+        let respostaUser = confirm('Deseja Deletar o Habito?')
+        if(!respostaUser) return;
+        const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         }
-    }
-       const promise = axios.delete(url,config)
-       promise.then((response) =>{
-           console.log(response)
-           console.log(response.data)
-       })
-       promise.catch((error) =>{
-           console.log(error)
-       })
+        const promise = axios.delete(url, config)
+        promise.then((response) => {
+            console.log(response)
+            console.log(response.data)
+        })
+        promise.catch((error) => {
+            console.log(error)
+        })
     }
     return (
         <HabitBox>
@@ -38,7 +40,12 @@ export default function HabitStats(props) {
                 <button className={days.includes(5) ? 'selecionado' : ''}>S</button>
                 <button className={days.includes(6) ? 'selecionado' : ''}>S</button>
             </div>
-            <img onClick={() => {deleteHabit()} }src={bin} alt='bin icon, for deleting habit'/>
+            <img onClick={() => {
+                deleteHabit()
+                callback()
+            }}
+                src={bin}
+                alt='bin icon, for deleting habit' />
         </HabitBox>
     )
 }

@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner';
 import axios from 'axios';
 import TokenContext from './../contexts/TokenContext'
 import ImageContext from './../contexts/ImageContext'
+import ActivateContext from './../contexts/ActivateContext'
 
 import BigLogo from "./../Assests/BigLogo.svg"
 
@@ -17,6 +18,11 @@ export default function LoginPage() {
     const {token, setToken} = useContext(TokenContext);
     const {image, setImage } = useContext(ImageContext);
     const navigate = useNavigate();
+
+    const {active, setActive} = useContext(ActivateContext)
+    setActive(false)
+
+    
 
     useEffect(() => {
         if (conectando) {
@@ -80,6 +86,7 @@ const LoginContainer = styled.div`
     font-family: Lexend Deca;
     font-style: normal;
     font-weight: 400;
+    background-color: #EEE;
 
     
 
@@ -95,7 +102,6 @@ const LoginContainer = styled.div`
         max-width: 600px;
         display: flex;
         flex-direction: column;
-        background-color: white;
     }
 
     input{

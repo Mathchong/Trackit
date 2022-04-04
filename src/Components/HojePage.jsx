@@ -3,6 +3,8 @@ import { useEffect, useState, useContext } from 'react'
 import dayjs from 'dayjs';
 import axios from 'axios';
 import TokenContext from './../contexts/TokenContext'
+import ActivateContext from './../contexts/ActivateContext'
+import PercentageContext from './../contexts/PercentageContext'
 import TodayHabit from './TodayHabit'
 
 require('dayjs/locale/pt-br');
@@ -11,9 +13,14 @@ export default function HojePage() {
     const diaSemana = ['Domingo, ', 'Segunda, ', 'Terça, ', 'Quarta, ', 'Quinta, ', 'Sexta, ', 'Sabado, ']
     const weekday = diaSemana[dayjs().locale('pt-br').format('d')]
     const date = dayjs().locale('pt-br').format('DD/MM')
-
     const [todayHabits, setTodayHabits] = useState([-1])
     const { token, setToken } = useContext(TokenContext)
+    const { active, setActive } = useContext(ActivateContext)
+    const { percentage, setPercentage } = useContext(PercentageContext)
+    const [reload,setReload] = useState([false])
+    let habitosACarregar = (<></>)
+    setActive(true)
+
 
     useEffect(() => {
         const url = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today'
@@ -24,14 +31,25 @@ export default function HojePage() {
         }
         const promise = axios.get(url, config)
         promise.then((response) => {
-            setTodayHabits([...response.data])
-            console.log(response.data)
-            console.log(todayHabits)
-        })
-    }, []
-    )
+            let aux = [...response.data]
+            let allHabits = aux.length
+            let cont = 0
 
-    useEffect(() => { }, [todayHabits])
+            for (let i = 0; i < allHabits; i++) {
+                if (aux[i].done) {
+                    cont++
+                }
+            }
+
+            console.log(aux, allHabits, cont)
+            console.log("cheguei aqui")
+            setPercentage((cont / allHabits))
+            habitosACarregar = percentageMarked()
+            setTodayHabits([...response.data])
+            
+        })
+    }, [reload]
+    )
 
     function percentageMarked() {
         if (todayHabits[0] === -1) return <h2>Carregando seus Habitos</h2>
@@ -45,7 +63,8 @@ export default function HojePage() {
                     name={name}
                     currentSequence={currentSequence}
                     done={done}
-                    highestSequence={highestSequence} />
+                    highestSequence={highestSequence} 
+                    callback={() => setReload([!reload])}/>
             })
         )
     }

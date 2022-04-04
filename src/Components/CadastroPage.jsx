@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext} from 'react';
 import Loader from 'react-loader-spinner';
 
 import BigLogo from "./../Assests/BigLogo.svg"
+import ActivateContext from './../contexts/ActivateContext'
 
 export default function CadastroPage(){
     const [email,setEmail] = useState('')
@@ -13,6 +14,8 @@ export default function CadastroPage(){
     const [image,setImage] = useState('')
     const [conectando, setConectando] = useState(false);
     const [reload, setReload] = useState(false);
+    const {active, setActive} = useContext(ActivateContext)
+    setActive(false)
     const navigate = useNavigate();
 
     useEffect(() => {},[reload])
@@ -100,6 +103,7 @@ const RegisterContainer = styled.div`
     font-family: Lexend Deca;
     font-style: normal;
     font-weight: 400;
+    background-color: #EEE;
 
     img{
         margin-top: 66px;
@@ -113,7 +117,6 @@ const RegisterContainer = styled.div`
         max-width: 600px;
         display: flex;
         flex-direction: column;
-        background-color: white;
     }
 
     input{
