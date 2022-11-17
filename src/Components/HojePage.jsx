@@ -18,7 +18,6 @@ export default function HojePage() {
     const { active, setActive } = useContext(ActivateContext)
     const { percentage, setPercentage } = useContext(PercentageContext)
     const [reload,setReload] = useState([false])
-    let habitosACarregar = (<></>)
     setActive(true)
 
 
@@ -43,10 +42,12 @@ export default function HojePage() {
 
             console.log(aux, allHabits, cont)
             console.log("cheguei aqui")
-            setPercentage((cont / allHabits))
-            habitosACarregar = percentageMarked()
-            setTodayHabits([...response.data])
-            
+            if(!allHabits){
+                allHabits++
+            }
+            setPercentage(cont / allHabits)
+            setTodayHabits([...aux])
+            console.log(`today habits ${todayHabits}`)
         })
     }, [reload]
     )
@@ -91,7 +92,6 @@ const HabitsToday = styled.main`
 
     .day{
         margin-top: 98px;
-        width: 340px;
     }
 
     h1{
