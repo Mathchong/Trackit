@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
-import Loader from 'react-loader-spinner';
+// import Loader from 'react-loader-spinner';
 import axios from 'axios';
 import TokenContext from './../contexts/TokenContext'
 import ImageContext from './../contexts/ImageContext'
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
     useEffect(() => {
         if (conectando) {
-            setMostrarNoBotao(<Loader type="ThreeDots" color="#FFFFFF" height={20} width={80} />)
+            setMostrarNoBotao("Carregando...")
         } else setMostrarNoBotao('Entrar')
 
     }, [conectando])

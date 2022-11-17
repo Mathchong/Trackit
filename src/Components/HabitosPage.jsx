@@ -2,7 +2,6 @@ import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import TokenContext from './../contexts/TokenContext'
-import HabitCreator from './HabitCreator'
 import HabitStats from "./HabitStats";
 
 export default function HabitosPage() {

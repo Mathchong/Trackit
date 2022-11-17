@@ -1,7 +1,6 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
 
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import TokenContext from "../contexts/TokenContext.js";
 import ImageContext from "../contexts/ImageContext.js";
 import PercentageContext from "../contexts/PercentageContext.js"

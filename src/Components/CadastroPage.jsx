@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect, useContext} from 'react';
-import Loader from 'react-loader-spinner';
+// import Loader from 'react-loader-spinner';
 
 import BigLogo from "./../Assests/BigLogo.svg"
 import ActivateContext from './../contexts/ActivateContext'
@@ -87,7 +87,7 @@ export default function CadastroPage(){
             onChange={(e) => setImage(e.target.value)}
             value={image}
             />
-            <button disabled={conectando ? true : false} type="submit">{conectando ? <Loader type="ThreeDots" color="#FFFFFF" height={20} width={80} /> : 'Cadastrar'}</button>
+            <button disabled={conectando ? true : false} type="submit">{conectando ? 'Carregando...' : 'Cadastrar'}</button>
         </form>
         <Link className="toHome" to="/" >Já tem uma conta? Faça Login!</Link>
     </RegisterContainer>
