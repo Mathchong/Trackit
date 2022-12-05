@@ -3,7 +3,7 @@ import styled from "styled-components";
 import bin from "./../Assests/bin.svg";
 import axios from "axios";
 
-import TokenContext from "./../contexts/TokenContext";
+import TokenContext from "../contexts/TokenContext";
 
 export default function HabitStats(props) {
   const { token } = useContext(TokenContext);

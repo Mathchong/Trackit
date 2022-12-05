@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 
 import BigLogo from "./../Assests/BigLogo.svg";
-import ActivateContext from "./../contexts/ActivateContext";
+import ActivateContext from "../contexts/ActivateContext";
 
 export default function CadastroPage() {
   const [email, setEmail] = useState("");

@@ -3,8 +3,8 @@ import styled from "styled-components";
 export default function ErroPage() {
   return (
     <ErrorInfo>
-      <h1>Eu sou a pagina de Erros!!</h1>
-      <h2>BUUUUUUU! Se amedronte</h2>
+      <h1>Parece que não conseguimos encontra sua página</h1>
+      <h2>Por favor retorne ao inicio</h2>
     </ErrorInfo>
   );
 }

@@ -12,8 +12,8 @@ import HabitosPage from "./HabitosPage";
 import HojePage from "./HojePage";
 import HistoricoPage from "./HistoricoPage";
 import ErroPage from "./ErroPage";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function App() {
   const [token, setToken] = useState("");
