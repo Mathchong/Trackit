@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import TokenContext from "./../contexts/TokenContext";
-import HabitStats from "./HabitStats";
+import TokenContext from "../contexts/TokenContext";
+import HabitStats from "../components/HabitStats";
 
 export default function HabitosPage() {
   const { token } = useContext(TokenContext);

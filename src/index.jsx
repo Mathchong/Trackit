@@ -1,7 +1,6 @@
-import ReactDOM from 'react-dom';
-import "./reset/reset.css"
+import ReactDOM from "react-dom";
+import "./reset/reset.css";
 
-import App from './Components/App'
+import App from "./Pages/App";
 
-
-ReactDOM.render(<App />, document.querySelector(".root"))
+ReactDOM.render(<App />, document.querySelector(".root"));
